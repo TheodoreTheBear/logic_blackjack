@@ -1,16 +1,16 @@
 #last updated 23:39 nov 9
 
-#too do list 
+#to do list 
 #make a dealer
 #make a betting system
 #make the "split and double down features"
-#trie to make the player stats in a file
+#try to make the player stats in a file
 #lord forgive me for what im about to code
 import random
 import math
 
 
-suits = ["of clubs", "of spades", "of dimond", "of hearts"]
+suits = ["of clubs", "of spades", "of diamond", "of hearts"]
 cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1]
 cards_hand = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "kings", "queen", "jack", "ace"]
 #hand view is the front end that prints out to the player only has string values
@@ -22,7 +22,7 @@ def main():
     read_name = fr.readlines()
     y = read_name[2]
     if y == '\n':
-        #this was a pain in the ass but this part basicly reads from the file and if it doesnt detect a player name it creates a new profile
+        #this was a pain in the ass but this part basically reads from the file and if it doesnt detect a player name it creates a new profile
         fr.close()
         fw = open('player.txt', 'w')
         x = input("please enter your name: ")
@@ -46,7 +46,7 @@ def main():
 def handstart():
     i = 1
     while i <= 2:
-        #this part assiens the starting hand by getting a random int and matching it to the suits, cards and card hand lists 2 times
+        #this part assigns the starting hand by getting a random int and matching it to the suits, cards and card hand lists 2 times
         x = random.randrange(0,13)
         hand = cards[x]
         handcount.append(hand)
@@ -56,11 +56,26 @@ def handstart():
         hand_suit = suits[y]
         handview.append(hand_suit)
         i += 1
-    hits()
+    switch()
+    
+def switch():
+    print(handview)
+    print("Your count for hand one is ?? and the count for hand2 is ??")
+    #How do we have it print the count so the user can decide?? I have not quite figured out your variables.
+	sw = str(input("Would you like to switch? Enter 'y' for yes or 'n' for no."))
+    #Request to switch hands - I can't do booleans for shit so this will have to do. Will likely need to check for errors ^^
+	    if sw == 'y':
+            x, y = y, x
+            print(handview)
+            hits()
+    #switch x and y value in hand and hand2
+        else:
+            hits()  
+    #if false, proceed and ignore
 
 def hits():
     total = math.fsum(handcount)  
-    #checks to see if the total is 21 and determen if the ace should be counted as a 11 or 1
+    #checks to see if the total is 21 and determine if the ace should be counted as a 11 or 1
     if 1 in handcount and total < 21:
         handcount.remove(1)
         handcount.append(11)
@@ -71,7 +86,7 @@ def hits():
         total = math.fsum(handcount)  
         
         
-    #checks if the total is 21 or over to  see if its a bust or black jack
+    #checks if the total is 21 or over to see if its a bust or blackjack
     if total > 21:
         print("\nyour cards are", ' '.join(handview), f'for a total of {total}')
         print('sorry thats bust\n')
